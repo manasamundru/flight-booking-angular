@@ -3,6 +3,9 @@ import com.flightapp.dto.AuthResponse;
 import com.flightapp.dto.LoginRequest;
 import com.flightapp.dto.SignUpRequest;
 import com.flightapp.service.AuthService;
+
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +18,14 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody SignUpRequest request) {
+    public ResponseEntity<Map<String, String>> register(
+            @RequestBody SignUpRequest request) {
         String msg = authService.signUp(request);
-        return ResponseEntity.ok(msg);
+        return ResponseEntity.ok(
+            Map.of("message", msg)
+        );
     }
+
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {

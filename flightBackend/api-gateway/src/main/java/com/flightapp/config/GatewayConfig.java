@@ -24,7 +24,7 @@ public class GatewayConfig {
             )
             .route("flight-service", r -> r
                 .path("/api/flights/**")
-                .filters(f -> f.filter(jwtAuthFilter.apply(new JwtAuthFilter.Config())))
+                //.filters(f -> f.filter(jwtAuthFilter.apply(new JwtAuthFilter.Config())))
                 .uri("lb://FLIGHT-SERVICE")
             )
 

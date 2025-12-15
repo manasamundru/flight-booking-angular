@@ -1,0 +1,21 @@
+<div class="card">
+  <h2>Register</h2>
+
+  <div class="input-group">
+    <label>Name</label>
+    <input [(ngModel)]="user.username">
+  </div>
+
+  <div class="input-group">
+    <label>Email</label>
+    <input type="email" [(ngModel)]="user.email">
+  </div>
+
+  <div class="input-group">
+    <label>Password</label>
+    <input type="password" [(ngModel)]="user.password">
+  </div>
+
+  <button class="btn-primary" (click)="register()">Register</button>
+</div>
+

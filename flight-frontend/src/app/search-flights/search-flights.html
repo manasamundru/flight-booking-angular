@@ -1,0 +1,28 @@
+<div class="card">
+  <h2>Search Flights</h2>
+
+  <div class="input-group">
+    <label>From</label>
+    <input [(ngModel)]="from">
+  </div>
+
+  <div class="input-group">
+    <label>To</label>
+    <input [(ngModel)]="to">
+  </div>
+
+  <div class="input-group">
+    <label>Date</label>
+    <input type="date" [(ngModel)]="date">
+  </div>
+
+  <button class="btn-primary" (click)="search()">Search Flights</button>
+  <button class="btn-danger" (click)="logout()">Logout</button>
+</div>
+
+<div *ngFor="let f of flights" class="card">
+  <h3>{{ f.flightNumber }}</h3>
+  <p>{{ f.fromPlace }} → {{ f.toPlace }}</p>
+  <b>₹ {{ f.price }}</b>
+</div>
+

@@ -1,0 +1,20 @@
+<div class="card">
+  <h2>Login</h2>
+
+  <div class="input-group">
+    <label>Username</label>
+    <input type="email" [(ngModel)]="credentials.username">
+  </div>
+
+  <div class="input-group">
+    <label>Password</label>
+    <input type="password" [(ngModel)]="credentials.password">
+  </div>
+
+  <button class="btn-primary" (click)="login()">Login</button>
+
+  <p class="link">
+    <a routerLink="/register">New user? Register</a>
+  </p>
+</div>
+

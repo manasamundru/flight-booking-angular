@@ -1,6 +1,4 @@
 package com.flightapp.filter;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpStatus;
@@ -8,10 +6,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class JwtAuthFilter extends AbstractGatewayFilterFactory<JwtAuthFilter.Config> {
-    @Autowired
-    private JwtUtil jwtUtil;
-    public JwtAuthFilter() {
+
+    private final JwtUtil jwtUtil;
+
+    public JwtAuthFilter(JwtUtil jwtUtil) {
         super(Config.class);
+        this.jwtUtil = jwtUtil;
     }
 
     public static class Config {}
@@ -19,21 +19,24 @@ public class JwtAuthFilter extends AbstractGatewayFilterFactory<JwtAuthFilter.Co
     @Override
     public GatewayFilter apply(Config config) {
         return (exchange, chain) -> {
-            String authHeader = exchange.getRequest().getHeaders().getFirst("Authorization");
+
+            String authHeader = exchange.getRequest()
+                    .getHeaders()
+                    .getFirst("Authorization");
+
             if (authHeader == null || !authHeader.startsWith("Bearer ")) {
                 exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
                 return exchange.getResponse().setComplete();
             }
-            String token = authHeader.substring(7);
+
             try {
-                jwtUtil.extractClaims(token);
+                jwtUtil.validateToken(authHeader.substring(7));
             } catch (Exception e) {
                 exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
                 return exchange.getResponse().setComplete();
             }
+
             return chain.filter(exchange);
         };
     }
 }
-
-

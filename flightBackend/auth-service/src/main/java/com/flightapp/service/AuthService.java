@@ -56,5 +56,15 @@ public class AuthService {
         String token = jwtService.generateToken(userDetails);
         return new AuthResponse(token);
     }
+    public String registerAdmin(SignUpRequest request) {
+        User user = new User(
+                request.getUsername(),
+                request.getEmail(),
+                passwordEncoder.encode(request.getPassword()),
+                Set.of("ROLE_ADMIN")
+        );
+        userRepo.save(user);
+        return "Admin user created successfully";
+    }
     
 }
